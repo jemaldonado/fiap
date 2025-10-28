@@ -1,20 +1,14 @@
 # routes/auth.py
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, create_refresh_token
-from sqlalchemy import text # Necessário para a rota de health
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
+from sqlalchemy import text 
 from werkzeug.security import generate_password_hash, check_password_hash
-
-# Importações de outros arquivos (db, modelos e extensões configuradas em app.py)
 from database import db 
-from models import User, Book 
-from app import jwt, limiter # Importamos as instâncias criadas em app.py
+from models import User 
+from app import  limiter 
 
 # Cria o Blueprint
 auth_bp = Blueprint('auth', __name__)
-
-# NOTA: O Limiter deve ser decorado antes do Blueprint para aplicar a limitação corretamente.
 
 @auth_bp.route('/register', methods=['POST'])
 @limiter.limit("5 per 10 minutes", override_defaults=True)
