@@ -7,19 +7,19 @@ Este projeto consiste em uma aplicação **Python Flask** que realiza **web scra
 ## 🧩 Estrutura do Projeto
 
 ```
-api/
-├── app.py                # Inicialização principal da aplicação Flask
-├── config.py             # Configurações da aplicação e do Swagger
-├── database.py           # Configuração da conexão com o banco PostgreSQL
-├── models.py             # Definição das classes User e Book
-├── routes/
-│   ├── auth.py           # Rotas de autenticação e JWT
-│   └── books.py          # Rotas de livros, estatísticas e ML
-├── scraper/
-│   ├── books_scraper.py  # Script de scraping que coleta os dados do site
-│   └── data/
-│       └── books.csv     # Arquivo CSV gerado com os dados coletados
-└── requirements.txt       # Dependências do projeto
+
+app.py                # Inicialização principal da aplicação Flask
+config.py             # Configurações da aplicação e do Swagger
+database.py           # Configuração da conexão com o banco PostgreSQL
+models.py             # Definição das classes User e Book
+routes/
+├── auth.py           # Rotas de autenticação e JWT
+└── books.py          # Rotas de livros, estatísticas e ML
+scraper/
+├── books_scraper.py  # Script de scraping que coleta os dados do site
+└── data/
+    └── books.csv     # Arquivo CSV gerado com os dados coletados
+requirements.txt       # Dependências do projeto
 ```
 
 ---
@@ -206,6 +206,10 @@ POST /api/v1/ml/predictions
 | POST | /api/v1/cache | Limpa o cache da aplicação |
 
 ---
+
+## Deploy do Projeto no render
+
+[render](https://fiap-sp30.onrender.com/) 
 
 ## 🧑‍💻 Autor
 
