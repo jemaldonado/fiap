@@ -1,41 +1,40 @@
 from flask import Flask, redirect, url_for
-from flask_jwt_extended import JWTManager
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
-from flask_caching import Cache
 from flasgger import Swagger
-from config import SWAGGER_TEMPLATE
-from database import db 
+from config import Config
+from database import db
+from extensions import jwt, cache, limiter
+import warnings
+warnings.filterwarnings("ignore", message="Using the in-memory storage")
 
-# Importar os Blueprints/models
-from routes.auth import auth_bp
-from routes.books import books_bp
 
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
-app = Flask(__name__)
-app.config.from_object('config')
+    # Inicializa extensões
+    db.init_app(app)
+    jwt.init_app(app)
+    cache.init_app(app)
+    limiter.init_app(app)
+    Swagger(app, template=Config.SWAGGER_TEMPLATE)
 
-# Configuração e Anexação de Extensões
-db.init_app(app)
-jwt = JWTManager(app)
-swagger = Swagger(app, template=SWAGGER_TEMPLATE)
-cache = Cache(app)
+    # Importa e registra os blueprints
+    from routes.auth import auth_bp
+    from routes.books import books_bp
 
-limiter = Limiter(
-    key_func=get_remote_address,
-    app=app,
-    storage_uri="memory://",
-    default_limits=["1000 per day", "100 per hour"]
-)
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(books_bp)
 
-app.register_blueprint(auth_bp) 
-app.register_blueprint(books_bp) 
+    @app.route('/')
+    def index():
+        return redirect(url_for('flasgger.apidocs'))
 
-@app.route('/')
-def index():
-    return redirect(url_for('flasgger.apidocs')) 
-
-if __name__ == '__main__':
-    with app.app_context():     
+    with app.app_context():
         db.create_all()
+
+    return app
+
+
+if __name__ == "__main__":
+    app = create_app()
     app.run(debug=True)
