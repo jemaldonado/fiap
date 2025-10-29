@@ -5,7 +5,7 @@ from sqlalchemy import text
 from werkzeug.security import generate_password_hash, check_password_hash
 from database import db 
 from models import User 
-from app import  limiter 
+from extensions import limiter
 
 # Cria o Blueprint
 auth_bp = Blueprint('auth', __name__)

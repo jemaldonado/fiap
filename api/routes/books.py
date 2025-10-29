@@ -1,14 +1,14 @@
 # routes/books.py
 
-from flask import Blueprint, request, jsonify, url_for, redirect
+from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required
 from sqlalchemy import text, func
 from math import ceil
-from sklearn.ensemble import RandomForestRegressor
+from extensions import limiter
 
 # Importações de outros arquivos
 from database import db 
-from models import User, Book 
+from models import  Book 
 from app import cache, limiter # Importamos as instâncias de app.py
 import nltk
 from nltk.corpus import stopwords
@@ -20,11 +20,10 @@ from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
 import random
 
-
 # Baixar os recursos necessários do NLTK (se ainda não tiverem sido baixados)
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('punkt_tab') # Adicionado download de punkt_tab
+#nltk.download('punkt')
+#nltk.download('stopwords')
+#nltk.download('punkt_tab') # Adicionado download de punkt_tab
 
 # Cria o Blueprint
 books_bp = Blueprint('books', __name__, url_prefix='/api/v1')
