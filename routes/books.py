@@ -10,6 +10,7 @@ from extensions import limiter
 from database import db 
 from models import  Book 
 from app import cache, limiter # Importamos as instâncias de app.py
+import os
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
