@@ -20,9 +20,11 @@ from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
 import random
 
+nltk.data.path.append(os.path.join(os.getcwd(), "nltk_data"))
+
 # Baixar os recursos necessários do NLTK (se ainda não tiverem sido baixados)
-nltk.download('punkt')
-nltk.download('stopwords')
+#nltk.download('punkt')
+#nltk.download('stopwords')
 #nltk.download('punkt_tab') # Adicionado download de punkt_tab
 
 # Cria o Blueprint
