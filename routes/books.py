@@ -21,8 +21,8 @@ from sklearn.model_selection import train_test_split
 import random
 
 # Baixar os recursos necessários do NLTK (se ainda não tiverem sido baixados)
-#nltk.download('punkt')
-#nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('stopwords')
 #nltk.download('punkt_tab') # Adicionado download de punkt_tab
 
 # Cria o Blueprint
