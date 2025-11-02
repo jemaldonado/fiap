@@ -3,6 +3,10 @@
 Este projeto consiste em uma aplicação **Python Flask** que realiza **web scraping** do site [Books to Scrape](https://books.toscrape.com/), salva os dados localmente em `.csv`, armazena-os em um banco **PostgreSQL** e disponibiliza uma **API RESTful documentada com Swagger** para consultas, estatísticas e endpoints de machine learning.
 
 ---
+## 🎯 Modelo inicial 
+
+![alt text]([http://url/to/img.png](https://github.com/jemaldonado/fiap/blob/main/arq.PNG))
+
 
 ## 🧩 Estrutura do Projeto
 
@@ -78,7 +82,7 @@ pip install -r requirements.txt
 
 ### 4. Configure o banco de dados
 
-No arquivo `config.py`, defina a string de conexão PostgreSQL:
+Crie um arquivo .env e coloco suas chaves para cripgrafia e url de banco de dados.
 
 ```python
 SQLALCHEMY_DATABASE_URI = "postgresql://usuario:senha@localhost:5432/booksdb"
@@ -210,6 +214,7 @@ POST /api/v1/ml/predictions
 ## Deploy do Projeto no render
 
 [render](https://fiap-sp30.onrender.com/) 
+
 
 ## 🧑‍💻 Autor
 
