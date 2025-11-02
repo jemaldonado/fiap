@@ -18,7 +18,6 @@ class User(db.Model):
    
 class Book(db.Model):
     __tablename__ = 'books'
-    # ... (restante da definição do Book, omitida por brevidade)
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     category = db.Column(db.String)
@@ -38,7 +37,6 @@ class Book(db.Model):
     availability_numeric = db.Column(db.Integer)
     
     def to_dict(self):
-        # ... (método de serialização)
         return {
             "id": self.id,
             "title": self.title,
