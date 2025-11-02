@@ -5,7 +5,7 @@ Este projeto consiste em uma aplicação **Python Flask** que realiza **web scra
 ---
 ## 🎯 Modelo inicial 
 
-![alt text]([http://url/to/img.png](https://github.com/jemaldonado/fiap/blob/main/arq.PNG))
+![alt text]([http://url/to/img.png](https://github.com/jemaldonado/fiap/blob/main/arq.PNG)])
 
 
 ## 🧩 Estrutura do Projeto
