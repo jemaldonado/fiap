@@ -9,7 +9,7 @@ from extensions import limiter
 # Importações de outros arquivos
 from database import db 
 from models import  Book 
-from app import cache, limiter # Importamos as instâncias de app.py
+from app import cache, limiter # importado de app.py
 import os
 import nltk
 from nltk.corpus import stopwords
@@ -23,7 +23,7 @@ import random
 
 nltk.data.path.append(os.path.join(os.getcwd(), "nltk_data"))
 
-# Baixar os recursos necessários do NLTK (se ainda não tiverem sido baixados)
+# Baixar os recursos necessários do NLTK para o render, tive que instalar de forma diferente, para ambiente local descomentar essa parte.
 #nltk.download('punkt')
 #nltk.download('stopwords')
 #nltk.download('punkt_tab') # Adicionado download de punkt_tab
