@@ -107,7 +107,7 @@ def protected():
     return jsonify({"msg": f"Usuário com ID {current_user_id} acessou a rota protegida."}), 200
 
 @auth_bp.route('/refresh', methods=['POST'])
-@jwt_required(refresh=True) # Require a valid refresh token to access this route
+@jwt_required(refresh=True) # Necessário refresh token
 def refresh():
     """
     Renova o token de acesso usando um refresh token válido.
@@ -126,6 +126,6 @@ def refresh():
       401:
         description: Refresh token inválido ou expirado
     """
-    current_user = get_jwt_identity() # Get the identity from the refresh token
-    new_access_token = create_access_token(identity=current_user) # Create a new access token
+    current_user = get_jwt_identity() # Pega o identity para o refresh token
+    new_access_token = create_access_token(identity=current_user) # Cria nova token
     return jsonify(access_token=new_access_token), 200  
