@@ -133,6 +133,7 @@ A API utiliza **JWT (JSON Web Token)** para autenticação.
 | GET | /api/v1/categories | Lista categorias únicas |
 | GET | /api/v1/price-range | Filtra por faixa de preço |
 | GET | /api/v1/top-rated | Retorna livros com maiores ratings |
+| POST | /api/v1/health | verifica se o banco de dados está aitvo e respondendo querys |
 
 ---
 
@@ -142,6 +143,14 @@ A API utiliza **JWT (JSON Web Token)** para autenticação.
 |:-------|:----------|:-----------|
 | GET | /api/v1/stats/overview | Total de livros, preço médio, distribuição de ratings |
 | GET | /api/v1/stats/categories | Estatísticas detalhadas por categoria |
+
+---
+
+## ⚡ Cache
+
+| Método | Endpoint | Descrição |
+|:-------|:----------|:-----------|
+| POST | /api/v1/cache | limpa cache da aplicação |
 
 ---
 
