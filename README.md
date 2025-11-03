@@ -335,10 +335,10 @@ E na rota `/login`:
 if user and check_password_hash(user.password, data['password']):
     ...
 ```
+<img src="https://github.com/jemaldonado/fiap/blob/main/usuario-db.PNG" alt="Alt text" width="100%">
 
 ### ✅ Benefício
-- Evita armazenamento de senhas em texto puro.  
-- Adiciona “sal” automaticamente, dificultando ataques de dicionário.  
+- Evita armazenamento de senhas em texto puro. 
 - Cumpre boas práticas de segurança para aplicações web.
 
 ---
@@ -357,7 +357,6 @@ response = requests.get("https://books.toscrape.com/")
 ```
 
 ### ✅ Benefício
-- Simples e poderosa para fazer requisições HTTP.  
 - Suporte nativo a cookies, headers e autenticação.  
 - Amplamente utilizada em pipelines de dados e APIs.
 
