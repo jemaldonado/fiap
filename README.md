@@ -212,53 +212,50 @@ POST /api/v1/ml/predictions
 ---
 
 ## 🧠 Tecnologias Utilizadas
+# ⚙️ Bibliotecas Principais Utilizadas na API
 
-⚙️ Bibliotecas Principais Utilizadas na API
+A aplicação Flask foi construída com foco em **segurança, desempenho e escalabilidade**, utilizando diversas bibliotecas que fortalecem a autenticação, controle de acesso, cache e integridade dos dados.
 
-A aplicação Flask foi construída com foco em segurança, desempenho e escalabilidade, utilizando diversas bibliotecas que fortalecem a autenticação, controle de acesso, cache e integridade dos dados.
+---
 
-🧩 Flask-Caching
+## 🧩 **Flask-Caching**
+```python
 from flask_caching import Cache
+```
+### 📘 Descrição
+O **Flask-Caching** é utilizado para armazenar resultados temporários de consultas e cálculos, melhorando o desempenho da API e reduzindo o tempo de resposta.
 
-📘 Descrição
-
-O Flask-Caching é utilizado para armazenar resultados temporários de consultas e cálculos, melhorando o desempenho da API e reduzindo o tempo de resposta.
-
-💡 Exemplo de uso:
-
-Na rota /cache, o cache é limpo manualmente:
-
+### 💡 Exemplo de uso:
+Na rota `/cache`, o cache é limpo manualmente:
+```python
 @books_bp.route('/cache', methods=['POST'])
 def clear_cache():
     cache.clear()
     return jsonify({"msg": "Cache limpo com sucesso"}), 200
-
-
+```
 Isso garante que dados obsoletos sejam descartados de forma controlada.
 
-✅ Benefício
+### ✅ Benefício
+- Diminui carga no banco de dados.  
+- Aumenta performance em endpoints acessados frequentemente.  
+- Permite controle fino sobre invalidação de cache.
 
-Diminui carga no banco de dados.
+---
 
-Aumenta performance em endpoints acessados frequentemente.
-
-Permite controle fino sobre invalidação de cache.
-
-🔐 Flask-JWT-Extended
+## 🔐 **Flask-JWT-Extended**
+```python
 from flask_jwt_extended import (
     JWTManager, create_access_token, create_refresh_token,
     jwt_required, get_jwt_identity
 )
-
-📘 Descrição
-
-Biblioteca essencial para autenticação e autorização baseada em JWT (JSON Web Tokens).
+```
+### 📘 Descrição
+Biblioteca essencial para **autenticação e autorização baseada em JWT (JSON Web Tokens)**.  
 Permite proteger endpoints e garantir que apenas usuários autenticados acessem determinados recursos.
 
-💡 Exemplo de uso:
-
+### 💡 Exemplo de uso:
 Na rota de login:
-
+```python
 @auth_bp.route('/login', methods=['POST'])
 def login():
     user = User.query.filter_by(username=data['username']).first()
@@ -266,193 +263,195 @@ def login():
         access_token = create_access_token(identity=str(user.id))
         refresh_token = create_refresh_token(identity=str(user.id))
         return jsonify(access_token=access_token, refresh_token=refresh_token), 200
-
+```
 
 Na rota protegida:
-
+```python
 @auth_bp.route('/protected', methods=['GET'])
 @jwt_required()
 def protected():
     current_user_id = get_jwt_identity()
     return jsonify({"msg": f"Usuário com ID {current_user_id} acessou a rota protegida."}), 200
+```
 
-✅ Benefício
+### ✅ Benefício
+- Tokens seguros e independentes de sessão.  
+- Permite *refresh tokens* para renovação sem reautenticação.  
+- Facilita integração com frontends modernos (React, Vue, etc).
 
-Tokens seguros e independentes de sessão.
+---
 
-Permite refresh tokens para renovação sem reautenticação.
-
-Facilita integração com frontends modernos (React, Vue, etc).
-
-🛡️ Flask-Limiter
+## 🛡️ **Flask-Limiter**
+```python
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
 limiter = Limiter(key_func=get_remote_address)
+```
+### 📘 Descrição
+O **Flask-Limiter** protege a API contra **ataques de sobrecarga (DoS) e uso abusivo**, limitando o número de requisições por IP em intervalos definidos.
 
-📘 Descrição
-
-O Flask-Limiter protege a API contra ataques de sobrecarga (DoS) e uso abusivo, limitando o número de requisições por IP em intervalos definidos.
-
-💡 Exemplo de uso:
+### 💡 Exemplo de uso:
+```python
 @auth_bp.route('/register', methods=['POST'])
 @limiter.limit("5 per 10 minutes", override_defaults=True)
 def register_user():
     ...
+```
 
-
-Na rota /protected, o uso é ainda mais restritivo:
-
+Na rota `/protected`, o uso é ainda mais restritivo:
+```python
 @auth_bp.route('/protected', methods=['GET'])
 @limiter.limit("1 per 1 minutes", override_defaults=True)
 @jwt_required()
 def protected():
     ...
+```
 
-✅ Benefício
+### ✅ Benefício
+- Evita spam e tentativas de brute-force.  
+- Melhora a estabilidade da aplicação sob alta demanda.  
+- Pode aplicar limites globais, por rota ou por IP.
 
-Evita spam e tentativas de brute-force.
+---
 
-Melhora a estabilidade da aplicação sob alta demanda.
-
-Pode aplicar limites globais, por rota ou por IP.
-
-🔑 Werkzeug Security
+## 🔑 **Werkzeug Security**
+```python
 from werkzeug.security import generate_password_hash, check_password_hash
+```
+### 📘 Descrição
+Fornece métodos para **criptografia e validação segura de senhas**, utilizando algoritmos modernos como PBKDF2 e SHA-256.
 
-📘 Descrição
-
-Fornece métodos para criptografia e validação segura de senhas, utilizando algoritmos modernos como PBKDF2 e SHA-256.
-
-💡 Exemplo de uso:
-
-Na rota /register:
-
+### 💡 Exemplo de uso:
+Na rota `/register`:
+```python
 hashed_password = generate_password_hash(
     data['password'], method='pbkdf2:sha256', salt_length=16
 )
+```
 
-
-E na rota /login:
-
+E na rota `/login`:
+```python
 if user and check_password_hash(user.password, data['password']):
     ...
+```
 
-✅ Benefício
+### ✅ Benefício
+- Evita armazenamento de senhas em texto puro.  
+- Adiciona “sal” automaticamente, dificultando ataques de dicionário.  
+- Cumpre boas práticas de segurança para aplicações web.
 
-Evita armazenamento de senhas em texto puro.
+---
 
-Adiciona “sal” automaticamente, dificultando ataques de dicionário.
-
-Cumpre boas práticas de segurança para aplicações web.
-
-🌐 Requests
+## 🌐 **Requests**
+```python
 import requests
+```
+### 📘 Descrição
+Biblioteca utilizada para **consumir páginas e APIs externas** de forma simples, ideal para tarefas de *web scraping* e integração com serviços de terceiros.
 
-📘 Descrição
-
-Biblioteca utilizada para consumir páginas e APIs externas de forma simples, ideal para tarefas de web scraping e integração com serviços de terceiros.
-
-💡 Exemplo de uso:
-
-No módulo scraper (não mostrado aqui), é usada para obter páginas HTML do site Books to Scrape:
-
+### 💡 Exemplo de uso:
+No módulo `scraper` (não mostrado aqui), é usada para obter páginas HTML do site *Books to Scrape*:
+```python
 response = requests.get("https://books.toscrape.com/")
+```
 
-✅ Benefício
+### ✅ Benefício
+- Simples e poderosa para fazer requisições HTTP.  
+- Suporte nativo a cookies, headers e autenticação.  
+- Amplamente utilizada em pipelines de dados e APIs.
 
-Simples e poderosa para fazer requisições HTTP.
+---
 
-Suporte nativo a cookies, headers e autenticação.
-
-Amplamente utilizada em pipelines de dados e APIs.
-
-🕸️ BeautifulSoup
+## 🕸️ **BeautifulSoup**
+```python
 from bs4 import BeautifulSoup
+```
+### 📘 Descrição
+Usada junto com `requests` para **extrair dados estruturados de páginas HTML** (ex: títulos, preços, descrições, categorias).
 
-📘 Descrição
-
-Usada junto com requests para extrair dados estruturados de páginas HTML (ex: títulos, preços, descrições, categorias).
-
-💡 Exemplo de uso:
+### 💡 Exemplo de uso:
+```python
 soup = BeautifulSoup(response.text, 'html.parser')
 titles = [book.h3.a['title'] for book in soup.select('.product_pod')]
+```
 
-✅ Benefício
+### ✅ Benefício
+- Facilita navegação no DOM e extração de dados.  
+- Compatível com seletores CSS e expressões regulares.  
+- Ideal para web scraping e coleta de dados automatizada.
 
-Facilita navegação no DOM e extração de dados.
+---
 
-Compatível com seletores CSS e expressões regulares.
-
-Ideal para web scraping e coleta de dados automatizada.
-
-🧠 NLTK (Natural Language Toolkit)
+## 🧠 **NLTK (Natural Language Toolkit)**
+```python
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+```
+### 📘 Descrição
+O **NLTK** é uma das principais bibliotecas de **Processamento de Linguagem Natural (NLP)**.  
+Na aplicação, é usada para **tokenizar e limpar textos**, removendo *stopwords* e preparando dados para aprendizado de máquina.
 
-📘 Descrição
-
-O NLTK é uma das principais bibliotecas de Processamento de Linguagem Natural (NLP).
-Na aplicação, é usada para tokenizar e limpar textos, removendo stopwords e preparando dados para aprendizado de máquina.
-
-💡 Exemplo de uso:
+### 💡 Exemplo de uso:
+```python
 stop_words = set(stopwords.words())
 def tokenize_and_remove_stopwords(text):
     tokens = word_tokenize(text.lower())
     return [word for word in tokens if word.isalnum() and word not in stop_words]
+```
 
-✅ Benefício
+### ✅ Benefício
+- Prepara textos para modelos de ML e análise semântica.  
+- Suporta múltiplos idiomas.  
+- Integra-se facilmente com `pandas` e `scikit-learn`.
 
-Prepara textos para modelos de ML e análise semântica.
+---
 
-Suporta múltiplos idiomas.
-
-Integra-se facilmente com pandas e scikit-learn.
-
-📊 Pandas & Scikit-Learn
+## 📊 **Pandas & Scikit-Learn**
+```python
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
+```
+### 📘 Descrição
+Essenciais para **manipulação de dados tabulares e preparação de features** para aprendizado de máquina.
 
-📘 Descrição
-
-Essenciais para manipulação de dados tabulares e preparação de features para aprendizado de máquina.
-
-💡 Exemplo de uso:
-
-Na rota /ml/features:
-
+### 💡 Exemplo de uso:
+Na rota `/ml/features`:
+```python
 preprocessor = ColumnTransformer(
     transformers=[('cat', OneHotEncoder(handle_unknown='ignore', sparse_output=False), ['category'])],
     remainder='passthrough'
 )
 processed_data = preprocessor.fit_transform(df_processed)
+```
 
-
-E na rota /ml/training-data:
-
+E na rota `/ml/training-data`:
+```python
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, train_size=train_split, random_state=random_state
 )
+```
 
-✅ Benefício
+### ✅ Benefício
+- Facilita engenharia de features e codificação de variáveis.  
+- Suporte completo a splits reprodutíveis e pipelines ML.  
+- Cria base sólida para futuras integrações com modelos preditivos.
 
-Facilita engenharia de features e codificação de variáveis.
+---
 
-Suporte completo a splits reprodutíveis e pipelines ML.
+# 🧾 Resumo Final
 
-Cria base sólida para futuras integrações com modelos preditivos.
-
-🧾 Resumo Final
-Biblioteca	Função Principal	Exemplo de Uso
-Flask-Caching	Cache e performance	/cache limpa cache da aplicação
-Flask-JWT-Extended	Autenticação e autorização via JWT	/login, /protected, /refresh
-Flask-Limiter	Proteção contra ataques de sobrecarga	/register, /protected
-Werkzeug Security	Criptografia segura de senhas	/register e /login
-Requests + BeautifulSoup	Web scraping e coleta de dados	Coleta de livros no BooksToScrape
-NLTK	Processamento de linguagem natural	Tokenização e remoção de stopwords
-Pandas + Scikit-Learn	Pré-processamento e ML	/ml/features, /ml/training-data
+| Biblioteca | Função Principal | Exemplo de Uso |
+|-------------|------------------|----------------|
+| **Flask-Caching** | Cache e performance | `/cache` limpa cache da aplicação |
+| **Flask-JWT-Extended** | Autenticação e autorização via JWT | `/login`, `/protected`, `/refresh` |
+| **Flask-Limiter** | Proteção contra ataques de sobrecarga | `/register`, `/protected` |
+| **Werkzeug Security** | Criptografia segura de senhas | `/register` e `/login` |
+| **Requests + BeautifulSoup** | Web scraping e coleta de dados | Coleta de livros no BooksToScrape |
+| **NLTK** | Processamento de linguagem natural | Tokenização e remoção de stopwords |
+| **Pandas + Scikit-Learn** | Pré-processamento e ML | `/ml/features`, `/ml/training-data` |
 
 ---
 
