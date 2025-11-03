@@ -2,6 +2,13 @@
 
 Este projeto consiste em uma aplicação **Python Flask** que realiza **web scraping** do site [Books to Scrape](https://books.toscrape.com/), salva os dados localmente em `.csv`, armazena-os em um banco **PostgreSQL** e disponibiliza uma **API RESTful documentada com Swagger** para consultas, estatísticas e endpoints de machine learning.
 
+## Deploy do Projeto no render
+
+[Deploy no render](https://fiap-sp30.onrender.com/) 
+
+[Vídeo de apresentação](https://www.youtube.com/watch?v=4SuFxibIm4I)
+
+
 ---
 ## 🎯 Modelo inicial 
 
@@ -218,11 +225,6 @@ POST /api/v1/ml/predictions
 | POST | /api/v1/cache | Limpa o cache da aplicação |
 
 ---
-
-## Deploy do Projeto no render
-
-[render](https://fiap-sp30.onrender.com/) 
-
 
 ## 🧑‍💻 Autor
 
