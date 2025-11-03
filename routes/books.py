@@ -129,6 +129,7 @@ def load_books():
 
 
 @books_bp.route("books", methods=["GET"])
+@cache.cached(timeout=60, query_string=True)
 @limiter.limit("5 per 10 minutes", override_defaults=True)
 def get_books():
     """
