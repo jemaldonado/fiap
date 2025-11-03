@@ -11,11 +11,11 @@ Este projeto consiste em uma aplicação **Python Flask** que realiza **web scra
 ---
 
 ## Arquitetura
-
+```
 Infraestrutura : Render 
 Banco de dados : PostgreSQL como serviço no Render
 Api            : Flask como serviço no render
-
+```
 ---
 
 ## 🎯 Modelo inicial 
