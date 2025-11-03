@@ -629,12 +629,12 @@ def training_data():
     df_total = pd.read_sql(query.statement, db.engine)
 
     # === pré-processamento ===
-    stop_words_portuguese = set(stopwords.words("portuguese"))
+    stop_words = set(stopwords.words("english"))
 
     def tokenize_and_remove_stopwords(text):
         if isinstance(text, str):
             tokens = word_tokenize(text.lower())
-            return [w for w in tokens if w.isalnum() and w not in stop_words_portuguese]
+            return [w for w in tokens if w.isalnum() and w not in stop_words]
         return []
 
     df_total["title_processed"] = df_total["title"].apply(tokenize_and_remove_stopwords)
