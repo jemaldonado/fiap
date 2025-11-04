@@ -99,6 +99,8 @@ pip install -r requirements.txt
 Crie um arquivo .env e coloco suas chaves para cripgrafia e url de banco de dados.
 
 ```python
+SECRET_KEY=xxxxxxxxxxxxxxxxxxxxxx
+JWT_SECRET_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxx
 SQLALCHEMY_DATABASE_URI = "postgresql://usuario:senha@localhost:5432/booksdb"
 ```
 
